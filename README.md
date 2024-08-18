@@ -13,7 +13,3 @@ This project aims to create a Blog Web Application using **Node.js** ![Node.js](
 - **Post Viewing:** 👀 Users can view all blog posts on the homepage.
 - **Post Update/Delete:** ✏️🗑️ Users can edit and delete their posts.
 - **Styling:** 💅 The application will be responsive and well-styled.
-
-## 🛠️ Technical Requirements
-- **Node.js** ![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white) & **Express.js** ![Express.js](https://img.shields.io/badge/Express.js-000000?logo=express&logoColor=white): Web server and routing.
-- **EJS** ![EJS](https://img.shields.io/badge/EJS-4E9F3D?logo=javascript&logoColor=white): Templating engine for dynamic HTML.
