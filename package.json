@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "This project aims to create a Blog Web Application using **Node.js** ![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white), **Express.js** ![Express.js](https://img.shields.io/badge/Express.js-000000?logo=express&logoColor=white), and **EJS** ![EJS](https://img.shields.io/badge/EJS-4E9F3D?logo=javascript&logoColor=white). The application will allow users to create, view, edit, and delete blog posts. Posts will not persist between sessions as no database will be used in this version. Styling is prioritized to ensure a great user experience.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,6 +20,7 @@
   "dependencies": {
     "ejs": "^3.1.10",
     "express": "^4.19.2",
-    "nodemon": "^3.1.4"
+    "multer": "^1.4.5-lts.1",
+    "path": "^0.12.7"
   }
 }
