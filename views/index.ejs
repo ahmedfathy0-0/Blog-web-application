@@ -1,1 +1,33 @@
+<%- include('partials/header') %>
+<body>
+
 <a href="/newpost">newpost</a>
+<a href="/updatepost">updatepost</a>
+
+<div class="container">
+    <div class="row">
+        <% if(posts.length > 0) { %>
+          <% posts.forEach(post => { %>
+            <div class="col-md-4">
+                <a href="#" class="card">
+                    <img src="<%= post.image %>" alt="web post card" class="card__img">
+                    <span class="card__footer">
+                      <span><%= post.title %></span>
+                    </span>
+                    
+                  </a>
+            </div>
+            <% }) %>
+        <% } else { %>
+            <h1>Welcome to Web Blog App</h1>
+            <h2>please add new post </h2>
+        <% } %>
+    </div>
+</div>
+        
+
+
+
+</body>
+
+<%- include('partials/footer') %>

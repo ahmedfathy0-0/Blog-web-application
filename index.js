@@ -17,8 +17,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 class Post {
-    constructor(auther, image, content) {
-        this.auther = auther;
+    constructor(title, image, content) {
+        this.title = title;
         this.image = image;
         this.content = content;
     }
@@ -30,7 +30,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    res.render('index.ejs');
+    res.render('index.ejs', { posts: postvector });
+    
 });
 
 app.get('/newpost', (req, res) => {
