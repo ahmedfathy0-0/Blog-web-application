@@ -43,7 +43,7 @@ app.post('/submit', upload.single('image'), (req, res) => {
     const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
     const newPost = new Post(req.body.name, imagePath, req.body.blog);
     postvector.push(newPost);
-    res.redirect('/'); // Redirect or render a response after submission
+    res.redirect(`/post/${newPost.id}`);
     console.log(postvector);
 });
 
@@ -66,7 +66,7 @@ app.post('/update/:id', upload.single('image'), (req, res) => {
         } else if (req.body.oldImage) {
             post.image = req.body.oldImage; 
         }
-        res.redirect('/'); 
+        res.redirect(`/post/${post.id}`);
     } else {
         res.status(404).send('Post not found');
     }
@@ -78,6 +78,15 @@ app.get('/deletepost' , (req, res) => {
 app.get('/delete/:id', (req, res) => {
     postvector = postvector.filter((post) => post.id != req.params.id);
     res.redirect('/');
+});
+
+app.get('/post/:id', (req, res) => {
+    const post = postvector.find((post) => post.id == req.params.id);
+    if (post) {
+        res.render('post.ejs', { post });
+    } else {
+        res.status(404).send('Post not found');
+    }
 });
 
 

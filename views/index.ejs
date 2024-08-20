@@ -10,7 +10,7 @@
         <% if(posts.length > 0) { %>
           <% posts.forEach(post => { %>
             <div class="col-md-4">
-                <a href="#" class="card">
+                <a href="/post/<%= post.id %>" class="card">
                     <img src="<%= post.image %>" alt="web post card" class="card__img">
                     <span class="card__footer">
                       <span><%= post.title %></span>
