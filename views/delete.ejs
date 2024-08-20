@@ -6,7 +6,7 @@
         <% if(posts.length > 0) { %>
           <% posts.forEach(post => { %>
             <div class="col-md-4">
-                <a href="/update/<%= post.id %>" class="card" >
+                <a href="/delete/<%= post.id %>" class="card" >
                     <img src="<%= post.image %>" alt="web post card" class="card__img">
                     <span class="card__footer">
                       <span><%= post.title %></span>
@@ -16,7 +16,7 @@
             </div>
             <% }) %>
         <% } else { %>
-            <h2>There is no posts to edit  </h2>
+            <h2>There is no posts to delete  </h2>
         <% } %>
     </div>
 </div>
