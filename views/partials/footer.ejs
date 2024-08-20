@@ -7,6 +7,22 @@
 function show() {
   document.getElementById('anotherFunction').classList.toggle('Active');
 }
+function showSearchBox() {
+    const searchBox = document.getElementById('search-box');
+    searchBox.style.display = 'block';
+    setTimeout(() => searchBox.classList.add('show'), 10);
+}
+
+function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+        const query = document.getElementById('search-box').value;
+        if (query) {
+            // Redirect to search results page with the query parameter
+            window.location.href = `/search?query=${encodeURIComponent(query)}`;
+        }
+    }
+}
+
 </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

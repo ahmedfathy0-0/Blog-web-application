@@ -1,9 +1,10 @@
 <%- include('partials/header.ejs') %>
 
-<h1>Choose the post you want to update!</h1>
+<h1>Choose the post you want to delete!</h1>
+<% if(posts.length > 0) { %>
 <div class="container">
     <div class="row">
-        <% if(posts.length > 0) { %>
+       
           <% posts.forEach(post => { %>
             <div class="col-md-4">
                 <a href="/delete/<%= post.id %>" class="card" >
@@ -15,11 +16,12 @@
                   </a>
             </div>
             <% }) %>
-        <% } else { %>
-            <h2>There is no posts to delete  </h2>
-        <% } %>
+        
     </div>
 </div>
+<% } else { %>
+  <h2>There is no posts to delete  </h2>
+<% } %>
         
 
 

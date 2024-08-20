@@ -90,6 +90,11 @@ app.get('/post/:id', (req, res) => {
 });
 
 
+app.get('/search', (req, res) => {
+    const query = req.query.query.toLowerCase();
+    const results = postvector.filter(post => post.title.toLowerCase().includes(query));
+    res.render('searchresults.ejs', { results, query });
+});
 
 
 

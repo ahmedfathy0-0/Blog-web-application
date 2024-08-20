@@ -20,8 +20,13 @@
           <li><a href="/updatepost"  class="active">Update Post</a></li>
           <li><a href="/deletepost"  class="active">Delete Post</a></li>
           <div class="line"></div>
-          <li><a><i class="fa fa-search" onclick="show()">
-            </i></a></li>
+          <li>
+            <a>
+                <i class="fa fa-search" id="search-icon" onclick="showSearchBox()"></i>
+            </a>
+        </li>
+        <input type="text" id="search-box" placeholder="Search..." onkeypress="handleKeyPress(event)" style="display: none;">
+        
         </ul>
       </nav>
     </div> 

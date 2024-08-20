@@ -1,9 +1,8 @@
 <%- include('partials/header') %>
 
-
+<% if(posts.length > 0) { %>
 <div class="container">
     <div class="row">
-        <% if(posts.length > 0) { %>
           <% posts.forEach(post => { %>
             <div class="col-md-4">
                 <a href="/post/<%= post.id %>" class="card">
@@ -15,11 +14,11 @@
                   </a>
             </div>
             <% }) %>
-        <% } else { %>
-            <h1>Welcome to Web Blog App</h1>
-            <h2>please add new post </h2>
-        <% } %>
     </div>
+    <% } else { %>
+      <h1>Welcome to Web Blog App</h1>
+      <h2>please add new post </h2>
+  <% } %>
 </div>
         
 

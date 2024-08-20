@@ -26,8 +26,11 @@ body {
     background-size: 400% 400%;
     animation: myGradient 12s ease infinite;
     color: var(--text-color);
-    padding-top: 60px; /* Replace 60px with the actual navbar height */
+    padding-top: 60px; 
 }
+
+
+
 
 @keyframes myGradient {
     0% { background-position: 0% 50%; }
@@ -38,24 +41,34 @@ body {
 .container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 50rem; /* Adjust the gap as needed */
+    gap: 10rem; 
     padding: 1rem;
     width: 100%;
     max-width: 1200px;
     margin-top: 20px;
 }
+
+h1 {
+    margin-bottom: 10px; 
+    text-align: center; 
+}
+
+h2 {
+    margin-top: 0; 
+    margin-bottom: 20px; 
+}
+
 /* Navbar */
-/* General styles for the navigation bar */
 ul {
     list-style-type: none;
     display: flex;
     padding: 18px 18px;
     background-size: 400% 400%;
-    width: 100%; /* Make navbar full width */
-    position: fixed; /* Keep navbar fixed at the top */
-    top: 0; /* Position at the top */
-    left: 0; /* Full width */
-    z-index: 1000; /* Ensure it stays above other elements */
+    width: 100%; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    z-index: 1000; 
     margin-bottom: 20px;
     align-items: center;
     justify-content: center;
@@ -81,25 +94,37 @@ ul {
     50% { opacity: 0.1; }
     100% { opacity: 1; text-shadow: 2px 2px 20px #fff; }
 }
+#search-box {
+    transition: opacity 0.5s, width 0.5s;
+    opacity: 0;
+    width: 0;
+    display: block;
+}
 
-/* Style for the navigation links */
+#search-box.show {
+    opacity: 1;
+    width: 200px; 
+}
+
+
+
 li a {
     color: #fff;
     text-decoration: none;
-    padding: 20px 30px; /* Adjust padding if needed */
+    padding: 20px 30px; 
     font-family: Verdana, sans-serif;
     font-weight: lighter;
-    font-size: 18px; /* Decrease font size */
+    font-size: 18px; 
     letter-spacing: 1px;
     opacity: 0.9;
 }
 
 .navigation {
-    position: fixed; /* Keep navigation fixed at the top */
+    position: fixed; 
     transform: translate(-50%, -50%);
-    top: 0; /* Position at the top */
-    left: 50%; /* Center horizontally */
-    width: 100%; /* Make navigation full width */
+    top: 0; 
+    left: 50%; 
+    width: 100%; 
 }
 
 /* Dropdown styles */
@@ -147,13 +172,13 @@ li a {
     }
 
     .navigation {
-        top: 0; /* Ensure navigation stays at the top */
+        top: 0; 
         left: 50%;
     }
 
     li a {
         padding: 20px 30px;
-        font-size: 18px; /* Keep decreased font size */
+        font-size: 18px; 
     }
 }
 
@@ -239,5 +264,29 @@ li a {
 #editor {
     background-color: white;
     color:#000;
+    height: 300px;
+    width: 100%;
+    padding: 1rem;
 
+
+}
+
+
+
+/* Footer */
+
+footer {
+    
+    color: var(--text-color);
+    text-align: center;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+footer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
 }
