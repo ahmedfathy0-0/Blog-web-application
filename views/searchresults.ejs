@@ -1,0 +1,26 @@
+<%- include('partials/header.ejs') %>
+
+<h1>Search Results for "<%= query %>"</h1> 
+<% if(results.length > 0) { %>
+<div class="container">
+    <div class="row">
+            <% results.forEach(post => { %>
+                <div class="col-md-4">
+                    <a href="/post/<%= post.id %>" class="card">
+                        <img src="<%= post.image %>" alt="web post card" class="card__img">
+                        <span class="card__footer">
+                            <span><%= post.title %></span>
+                        </span>
+                    </a>
+                </div>
+            <% }) %>
+       
+    </div>
+</div>
+<% } else { %>
+    <h2 id=" no-result ">No results found.</h2>
+<% } %>
+
+
+
+<%- include('partials/footer.ejs') %>
