@@ -1,6 +1,6 @@
 <%- include('partials/header.ejs') %>
 
-<body>
+
   <div class="container">
     <form action="/submit" method="POST" enctype="multipart/form-data">
       <div class="form-group">
@@ -13,7 +13,7 @@
       </div>
       <div class="form-group">
         <label>Blog</label>
-        <div id="editor"></div>
+        <div id="editor" style="background-color: white; height: 375px;"></div>
         <input type="hidden" name="blog" id="blog">
       </div>
       <button type="submit">Submit Form</button>
@@ -79,7 +79,7 @@
 
 
 
-</body>
+
 
 
 <%- include('partials/footer.ejs') %>

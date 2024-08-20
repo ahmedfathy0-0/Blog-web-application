@@ -1,48 +1,164 @@
 
-.html{
+:root {
+ 
+    --primary-color: #2A363B;
+    --secondary-color: #CBB26B;
+    --accent-color: #E84A5F;
+    --background-color: #F2F2F2;
+    --text-color: #ffffff;
+}
+   
+/* Global Styles */
+html {
     font-size: 16px;
     font-family: Arial, sans-serif;
-    }
+}
 
 * {
     box-sizing: border-box;
-    }
-    
-    body {
+}
+
+body {
     display: grid;
     place-items: center;
     min-height: 100vh;
-    }
+    background: linear-gradient(-45deg, #ff5959, #ff4040, #ff0d6e, #ff8033, #d74177);
+    background-size: 400% 400%;
+    animation: myGradient 12s ease infinite;
+    color: var(--text-color);
+    padding-top: 60px; /* Replace 60px with the actual navbar height */
+}
+
+@keyframes myGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
 .container {
-    max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 50rem; /* Adjust the gap as needed */
+    padding: 1rem;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 20px;
+}
+/* Navbar */
+/* General styles for the navigation bar */
+ul {
+    list-style-type: none;
+    display: flex;
+    padding: 18px 18px;
+    background-size: 400% 400%;
+    width: 100%; /* Make navbar full width */
+    position: fixed; /* Keep navbar fixed at the top */
+    top: 0; /* Position at the top */
+    left: 0; /* Full width */
+    z-index: 1000; /* Ensure it stays above other elements */
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Style for the Font Awesome search icon */
+.fa-search {
+    transition: 1s;
+    cursor: pointer;
+    margin-left: 30px;
+}
+
+.fa-search:hover {
+    color: #fff;
+    animation: myFlash 1.5s linear infinite;
+    text-shadow: 2px 2px 30px #fff;
+    transition: 2s;
+}
+
+@keyframes myFlash {
+    0% { opacity: 1; text-shadow: transparent; }
+    50% { opacity: 0.1; }
+    100% { opacity: 1; text-shadow: 2px 2px 20px #fff; }
+}
+
+/* Style for the navigation links */
+li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 20px 30px; /* Adjust padding if needed */
+    font-family: Verdana, sans-serif;
+    font-weight: lighter;
+    font-size: 18px; /* Decrease font size */
+    letter-spacing: 1px;
+    opacity: 0.9;
+}
+
+.navigation {
+    position: fixed; /* Keep navigation fixed at the top */
+    transform: translate(-50%, -50%);
+    top: 0; /* Position at the top */
+    left: 50%; /* Center horizontally */
+    width: 100%; /* Make navigation full width */
+}
+
+/* Dropdown styles */
+.dropdown {
+    background: red;
+    width: 150px;
+    height: 350px;
+    color: #fff;
+    font-family: Verdana, sans-serif;
+    padding: 20px 30px;
+    line-height: 50px;
+    text-align: center;
+    font-weight: bold;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 71%;
+    left: 69.2%;
+    background-size: 400% 400%;
+    background-image: linear-gradient(-45deg, #ff0d0d, #ff0d6e, #ff3d0d, #ffff00);
+    animation: myLineargradient 6s infinite;
+    box-shadow: 2px 3px 20px #ff1700;
+}
+
+@keyframes myLineargradient {
+    0% { background-position: 0% 50%; box-shadow: 2px 3px 20px #ff1700; }
+    50% { background-position: 100% 50%; box-shadow: none; }
+    100% { background-position: 0% 50%; box-shadow: 2px 3px 20px #ff1700; }
+}
+
+/* Style for dropdown items */
+.dropdown .drop1,
+.dropdown .drop2,
+.dropdown .drop3,
+.dropdown .drop4 {
+    cursor: pointer;
+    text-shadow: 1px 2px 18px #fff;
+    transition: 2s;
+    margin-top: -5px;
+}
+
+/* Responsive styles */
+@media(max-width: 767px) {
+    .dropdown {
+        display: none;
     }
 
-    .form-group {
-    margin-bottom: 12px;
+    .navigation {
+        top: 0; /* Ensure navigation stays at the top */
+        left: 50%;
     }
 
-    label {
-    display: block;
-    margin-bottom: 4px;
+    li a {
+        padding: 20px 30px;
+        font-size: 18px; /* Keep decreased font size */
     }
+}
 
-    input {
-    border: 1px solid #ccc;
-    }
-
-    input,
-    .ql-editor {
-    padding: 4px;
-    font-size: 14px;
-    }
-
-    #editor {
-    height: 130px;
-    }
-
-      
-    .card {
+/* Card */
+.card {
     --blur: 16px;
     --size: clamp(300px, 50vmin, 600px);
     width: var(--size);
@@ -50,37 +166,39 @@
     position: relative;
     border-radius: 2rem;
     overflow: hidden;
-    color: #000;
+    color: var(--text-color);
     transform: translateZ(0);
     margin-top: 1rem;
     margin-bottom: 1rem;
-    }
-    
-    .card__img {
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card__img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transform: scale(calc(1 + (var(--hover, 0) * 0.25))) rotate(calc(var(--hover, 0) * -5deg));
     transition: transform 0.2s;
-    }
-    
-    .card__footer {
+}
+
+.card__footer {
     padding: 0 1.5rem;
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    background: red;
     display: grid;
     grid-template-row: auto auto;
     gap: 0.5ch;
-    background: hsl(0 0% 100% / 0.5);
+    background: var(--background-color);
     backdrop-filter: blur(var(--blur));
     height: 30%;
     align-content: center;
-    }
-    
-    .card__action {
+    color: #000;
+}
+
+.card__action {
     position: absolute;
     aspect-ratio: 1;
     width: calc(var(--size) * 0.15);
@@ -93,28 +211,33 @@
         )
         )
         translateY(calc(var(--hover, 0) * (var(--size) * -0.4)));
-    background: purple;
+    background: var(--primary-color);
     display: grid;
     place-items: center;
     border-radius: 0.5rem;
-    background: hsl(0 0% 100% / 0.5);
-    /*   backdrop-filter: blur(calc(var(--blur) * 0.5)); */
     transition: transform 0.2s;
-    }
-    
-    .card__action svg {
+}
+
+.card__action svg {
     aspect-ratio: 1;
     width: 50%;
-    }
-    
-    .card__footer span:nth-of-type(1) {
+    fill: white;
+}
+
+.card__footer span:nth-of-type(1) {
     font-size: calc(var(--size) * 0.065);
-    }
-    
-    .card__footer span:nth-of-type(2) {
+}
+
+.card__footer span:nth-of-type(2) {
     font-size: calc(var(--size) * 0.035);
-    }
-    
-    .card:is(:hover, :focus-visible) {
+}
+
+.card:is(:hover, :focus-visible) {
     --hover: 1;
-    }
+}
+
+#editor {
+    background-color: white;
+    color:#000;
+
+}

@@ -1,6 +1,6 @@
 <%- include('partials/header.ejs') %>
 
-<body>
+
   <div class="container">
     <form action="/update/<%= post.id %>" method="POST" enctype="multipart/form-data">
       <div class="form-group">
@@ -18,7 +18,7 @@
       
       <div class="form-group">
         <label>Blog</label>
-        <div id="editor"></div>
+        <div id="editor" style="background-color: white; height: 375px;"></div>
         <input type="hidden" name="blog" id="blog" value="<%= post.content %>">
       </div>
       
@@ -64,5 +64,5 @@
   
       
       
-</body>
+
 <%- include('partials/footer.ejs') %>
