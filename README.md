@@ -12,4 +12,5 @@ This project aims to create a Blog Web Application using **Node.js** ![Node.js](
 - **Post Creation:** 📝 Users can create new blog posts.
 - **Post Viewing:** 👀 Users can view all blog posts on the homepage.
 - **Post Update/Delete:** ✏️🗑️ Users can edit and delete their posts.
+- **Modular API**: 🗄️ The API logic is separated into its own module, facilitating better project structure and easier future updates.
 - **Styling:** 💅 The application will be responsive and well-styled.
