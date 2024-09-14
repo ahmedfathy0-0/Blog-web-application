@@ -1,157 +1,118 @@
+import express from 'express';
+import pg from 'pg';
+import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
+dotenv.config();
 
-import express from "express";
-import bodyParser from "body-parser";
+
+const db = new pg.Client({
+  connectionString: process.env.POSTGRES_URL,
+  ssl: {
+    rejectUnauthorized: false 
+  }
+});
+
+db.connect();
 
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
-let ID = 1;
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-
-//GET All posts
-app.get("/allposts", (req, res) => {
-    res.json(posts);
+// Get all posts
+app.get('/allposts', async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM posts');
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    res.status(500).json({ message: 'Error fetching posts' });
+  }
 });
 
-//GET a specific post by id
-
-app.get("/posts/:id",(req,res)=>{
-    const post = posts.find((post) => post.id == req.params.id);
-    if(post){
-        res.json(post);
-    }else{
-        res.status(404).json({message: "Post not found"});
+// Get a specific post by ID
+app.get('/posts/:id', async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM posts WHERE id = $1', [req.params.id]);
+    const post = result.rows[0];
+    if (post) {
+      res.json(post);
+    } else {
+      res.status(404).json({ message: 'Post not found' });
     }
+  } catch (error) {
+    console.error('Error fetching post:', error);
+    res.status(500).json({ message: 'Error fetching post' });
+  }
 });
 
-
-
-
-//Filter posts by title
-
-app.get("/filter",(req,res)=>{
+// Filter posts
+app.get('/filter', async (req, res) => {
+  try {
     const query = req.query.query.toLowerCase();
-    const filteredPosts = posts.filter((post) => post.title.toLowerCase().includes(query));
-    res.json(filteredPosts);
+    const result = await db.query('SELECT * FROM posts WHERE LOWER(title) LIKE $1', [`%${query}%`]);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error filtering posts:', error);
+    res.status(500).json({ message: 'Error filtering posts' });
+  }
 });
 
-//POST a new post
-app.post("/posts", (req, res) => {
-    const { title, image, content } = req.body;
-    if (!title || !image || !content) {
-        res.status(400).json({ message: "Please provide title, image, and content" });
-    } else {
-        const newPost = new Post(title, image, content);
-        posts.push(newPost);
-        res.status(201).json(newPost);
-    }
+// Create a new post
+app.post('/posts', async (req, res) => {
+  const { title, image, content } = req.body;
+  if (!title || !image || !content) {
+    return res.status(400).json({ message: 'Please provide title, image, and content' });
+  }
+  try {
+    const result = await db.query(
+      'INSERT INTO posts (title, image, content) VALUES ($1, $2, $3) RETURNING *',
+      [title, image, content]
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error('Error creating post:', error);
+    res.status(500).json({ message: 'Error creating post' });
+  }
 });
 
-//PATCH a post by providing the post id and the updated fields.
-app.patch("/posts/:id", (req, res) => {
-    const post = posts.find((post) => post.id == req.params.id);
+// Update a specific post
+app.patch('/posts/:id', async (req, res) => {
+  const { title, image, content } = req.body;
+  try {
+    const result = await db.query(
+      'UPDATE posts SET title = COALESCE($1, title), image = COALESCE($2, image), content = COALESCE($3, content) WHERE id = $4 RETURNING *',
+      [title, image, content, req.params.id]
+    );
+    const post = result.rows[0];
     if (post) {
-        const { title, image, content } = req.body;
-        if (title) {
-            post.title = title;
-        }
-        if (image) {
-            post.image = image;
-        }
-        if (content) {
-            post.content = content;
-        }
-        res.json(post);
+      res.json(post);
     } else {
-        res.status(404).json({ message: "Post not found" });
+      res.status(404).json({ message: 'Post not found' });
     }
+  } catch (error) {
+    console.error('Error updating post:', error);
+    res.status(500).json({ message: 'Error updating post' });
+  }
 });
 
-//DELETE a specific post by providing the post id.
-app.delete("/posts/:id", (req, res) => {
-    const post = posts.find((post) => post.id == req.params.id);
+// Delete a specific post
+app.delete('/posts/:id', async (req, res) => {
+  try {
+    const result = await db.query('DELETE FROM posts WHERE id = $1 RETURNING *', [req.params.id]);
+    const post = result.rows[0];
     if (post) {
-        posts = posts.filter((post) => post.id != req.params.id);
-        res.json(post);
+      res.json(post);
     } else {
-        res.status(404).json({ message: "Post not found" });
+      res.status(404).json({ message: 'Post not found' });
     }
+  } catch (error) {
+    console.error('Error deleting post:', error);
+    res.status(500).json({ message: 'Error deleting post' });
+  }
 });
-
-
-
-
 
 app.listen(port, () => {
   console.log(`API is running at http://localhost:${port}`);
 });
-
-class Post {
-    constructor(title, image, content) {
-        this.id = ID++;
-        this.title = title;
-        this.image = image;
-        this.content = content;
-    }
-}
-
-
-
-// In-memory data store
-let posts = [
-    new Post(
-        "The Rise of Decentralized Finance",
-        "/uploads/image-1.jpg",
-        "Decentralized Finance (DeFi) is an emerging and rapidly evolving field in the blockchain industry. It refers to the shift from traditional, centralized financial systems to peer-to-peer finance enabled by decentralized technologies built on Ethereum and other blockchains. With the promise of reduced dependency on the traditional banking sector, DeFi platforms offer a wide range of services, from lending and borrowing to insurance and trading."
-    ),
-    new Post(
-        "The Impact of Artificial Intelligence on Modern Businesses",
-        "/uploads/image-2.jpg",
-        "Artificial Intelligence (AI) is no longer a concept of the future. It's very much a part of our present, reshaping industries and enhancing the capabilities of existing systems. From automating routine tasks to offering intelligent insights, AI is proving to be a boon for businesses. With advancements in machine learning and deep learning, businesses can now address previously insurmountable problems and tap into new opportunities."
-    ),
-    new Post(
-        "Sustainable Living: Tips for an Eco-Friendly Lifestyle",
-        "/uploads/image-3.jpg",
-        "Sustainability is more than just a buzzword; it's a way of life. As the effects of climate change become more pronounced, there's a growing realization about the need to live sustainably. From reducing waste and conserving energy to supporting eco-friendly products, there are numerous ways we can make our daily lives more environmentally friendly. This post will explore practical tips and habits that can make a significant difference."
-    ),
-    new Post(
-        "The Rise of Decentralized Finance",
-        "/uploads/image-4.jpg",
-        "Decentralized Finance (DeFi) is an emerging and rapidly evolving field in the blockchain industry. It refers to the shift from traditional, centralized financial systems to peer-to-peer finance enabled by decentralized technologies built on Ethereum and other blockchains. With the promise of reduced dependency on the traditional banking sector, DeFi platforms offer a wide range of services, from lending and borrowing to insurance and trading."
-    ),
-    new Post(
-        "The Impact of Artificial Intelligence on Modern Businesses",
-        "/uploads/image-5.jpg",
-        "Artificial Intelligence (AI) is no longer a concept of the future. It's very much a part of our present, reshaping industries and enhancing the capabilities of existing systems. From automating routine tasks to offering intelligent insights, AI is proving to be a boon for businesses. With advancements in machine learning and deep learning, businesses can now address previously insurmountable problems and tap into new opportunities."
-    ),
-    new Post(
-        "Sustainable Living: Tips for an Eco-Friendly Lifestyle",
-        "/uploads/image-6.jpg",
-        "Sustainability is more than just a buzzword; it's a way of life. As the effects of climate change become more pronounced, there's a growing realization about the need to live sustainably. From reducing waste and conserving energy to supporting eco-friendly products, there are numerous ways we can make our daily lives more environmentally friendly. This post will explore practical tips and habits that can make a significant difference."
-    ),
-    new Post(
-        "The Rise of Decentralized Finance",
-        "/uploads/image-7.jpg",
-        "Decentralized Finance (DeFi) is an emerging and rapidly evolving field in the blockchain industry. It refers to the shift from traditional, centralized financial systems to peer-to-peer finance enabled by decentralized technologies built on Ethereum and other blockchains. With the promise of reduced dependency on the traditional banking sector, DeFi platforms offer a wide range of services, from lending and borrowing to insurance and trading."
-    ),
-    new Post(
-        "The Impact of Artificial Intelligence on Modern Businesses",
-        "/uploads/image-8.jpg",
-        "Artificial Intelligence (AI) is no longer a concept of the future. It's very much a part of our present, reshaping industries and enhancing the capabilities of existing systems. From automating routine tasks to offering intelligent insights, AI is proving to be a boon for businesses. With advancements in machine learning and deep learning, businesses can now address previously insurmountable problems and tap into new opportunities."
-    ),
-    new Post(
-        "Sustainable Living: Tips for an Eco-Friendly Lifestyle",
-        "/uploads/image-9.jpg",
-        "Sustainability is more than just a buzzword; it's a way of life. As the effects of climate change become more pronounced, there's a growing realization about the need to live sustainably. From reducing waste and conserving energy to supporting eco-friendly products, there are numerous ways we can make our daily lives more environmentally friendly. This post will explore practical tips and habits that can make a significant difference."
-    ),
-    new Post(
-        "The Rise of Decentralized Finance",
-        "/uploads/image-10.jpg",
-        "Decentralized Finance (DeFi) is an emerging and rapidly evolving field in the blockchain industry. It refers to the shift from traditional, centralized financial systems to peer-to-peer finance enabled by decentralized technologies built on Ethereum and other blockchains. With the promise of reduced dependency on the traditional banking sector, DeFi platforms offer a wide range of services, from lending and borrowing to insurance and trading."
-    ),
-
-    
-];

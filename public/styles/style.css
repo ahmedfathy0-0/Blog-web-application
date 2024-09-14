@@ -1,14 +1,11 @@
-
 :root {
- 
     --primary-color: #2A363B;
     --secondary-color: #CBB26B;
     --accent-color: #E84A5F;
     --background-color: #F2F2F2;
     --text-color: #ffffff;
 }
-   
-/* Global Styles */
+
 html {
     font-size: 16px;
     font-family: Arial, sans-serif;
@@ -26,63 +23,68 @@ body {
     background-size: 400% 400%;
     animation: myGradient 12s ease infinite;
     color: var(--text-color);
-    padding-top: 60px; 
+    padding-top: 60px;
 }
 
-
-
-
-@keyframes myGradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-.container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 10rem; 
-    padding: 1rem;
+/* Header styles */
+.navigation {
+    position: fixed;
+    transform: translate(-50%, -50%);
+    top: 0;
+    left: 50%;
     width: 100%;
-    max-width: 1200px;
-    margin-top: 20px;
+    z-index: 1000;
 }
 
-h1 {
-    margin-bottom: 10px; 
-    text-align: center; 
-}
-
-h2 {
-    margin-top: 0; 
-    margin-bottom: 20px; 
-}
-
-/* Navbar */
-ul {
+.nav-type {
     list-style-type: none;
     display: flex;
     padding: 18px 18px;
     background-size: 400% 400%;
-    width: 100%; 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    z-index: 1000; 
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
     margin-bottom: 20px;
     align-items: center;
     justify-content: center;
 }
+.nav-type .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    margin-right: auto;
+    font-family: Verdana, sans-serif;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 20px #fff;
+}
 
+.nav-type li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 20px 30px;
+    font-family: Verdana, sans-serif;
+    font-weight: lighter;
+    font-size: 18px;
+    letter-spacing: 1px;
+    opacity: 0.9;
+}
+.nav-type li a:hover {
+    color: #fff;
+    opacity: 1;
+    text-shadow: 2px 2px 20px #fff;
+    transition: 0.5s;
+}
 
-/* Style for the Font Awesome search icon */
-.fa-search {
+.nav-type .fa-search {
     transition: 1s;
     cursor: pointer;
     margin-left: 30px;
 }
 
-.fa-search:hover {
+.nav-type .fa-search:hover {
     color: #fff;
     animation: myFlash 1.5s linear infinite;
     text-shadow: 2px 2px 30px #fff;
@@ -94,6 +96,7 @@ ul {
     50% { opacity: 0.1; }
     100% { opacity: 1; text-shadow: 2px 2px 20px #fff; }
 }
+
 #search-box {
     transition: opacity 0.5s, width 0.5s;
     opacity: 0;
@@ -103,31 +106,10 @@ ul {
 
 #search-box.show {
     opacity: 1;
-    width: 200px; 
+    width: 200px;
 }
 
-
-
-li a {
-    color: #fff;
-    text-decoration: none;
-    padding: 20px 30px; 
-    font-family: Verdana, sans-serif;
-    font-weight: lighter;
-    font-size: 18px; 
-    letter-spacing: 1px;
-    opacity: 0.9;
-}
-
-.navigation {
-    position: fixed; 
-    transform: translate(-50%, -50%);
-    top: 0; 
-    left: 50%; 
-    width: 100%; 
-}
-
-/* Dropdown styles */
+/* Dropdown Menu */
 .dropdown {
     background: red;
     width: 150px;
@@ -154,7 +136,6 @@ li a {
     100% { background-position: 0% 50%; box-shadow: 2px 3px 20px #ff1700; }
 }
 
-/* Style for dropdown items */
 .dropdown .drop1,
 .dropdown .drop2,
 .dropdown .drop3,
@@ -172,21 +153,40 @@ li a {
     }
 
     .navigation {
-        top: 0; 
+        top: 0;
         left: 50%;
     }
 
-    li a {
+    .nav-type li a {
         padding: 20px 30px;
-        font-size: 18px; 
+        font-size: 18px;
     }
 }
 
-/* Card */
+/* General styles */
+.container {
+    display: flex;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10rem;
+    padding: 1rem;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 20px;
+}
+
+h1 {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
 .card {
     --blur: 16px;
-    --size: clamp(300px, 50vmin, 600px);
-    width: var(--size);
+    width: 100%;
     aspect-ratio: 4 / 3;
     position: relative;
     border-radius: 2rem;
@@ -267,16 +267,10 @@ li a {
     height: 300px;
     width: 100%;
     padding: 1rem;
-
-
 }
 
-
-
-/* Footer */
-
+/* Footer styles */
 footer {
-    
     color: var(--text-color);
     text-align: center;
     padding: 1rem;
@@ -284,6 +278,7 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
 footer-container {
     display: flex;
     justify-content: center;

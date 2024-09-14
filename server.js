@@ -27,7 +27,6 @@ app.use(express.static('public'));
 
 app.get('/', async (req, res) => {
     const response = await axios.get(`${API_URL}/allposts`);
-    console.log(response.data);
     res.render('index.ejs', { posts: response.data });
 
 });
