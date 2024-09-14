@@ -1,7 +1,7 @@
 <%- include('partials/header') %>
 
+<div class="card-container">
 <% if(posts.length > 0) { %>
-<div class="container">
     <div class="row">
           <% posts.forEach(post => { %>
             <div class="col-md-4">
@@ -11,7 +11,7 @@
                       <span><%= post.title %></span>
                     </span>
                     
-                  </a>
+                </a>
             </div>
             <% }) %>
     </div>
@@ -20,6 +20,7 @@
       <h2>please add new post </h2>
   <% } %>
 </div>
+
         
 
 

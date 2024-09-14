@@ -1,0 +1,50 @@
+<%- include('partials/header') %>
+
+
+<% if (error!='') { %>
+    <script>
+        alert('<%= error %>');
+    </script>
+<% } %>
+<% if (Login) { %>
+<div class="login-container">
+    <form action="/login" method="POST" class="form">
+        <h1 class="form__title">Login</h1>
+        <div class="form__group">
+            <label for="email" class="form__label">Email</label>
+            <input type="email" name="email" id="email" class="form__input" required>
+        </div>
+        <div class="form__group">
+            <label for="password" class="form__label">Password</label>
+            <input type="password" name="password" id="password" class="form__input" required>
+        </div>
+        <button type="submit" class="btn btn--primary">Login</button>
+        <a href="/register" class="form__link">Don't have an account? Register</a>
+    </form>
+</div>
+<% } else { %>
+<div class="login-container">
+    <form action="/register" method="POST" class="form">
+        <h1 class="form__title">Register</h1>
+        <div class="form__group">
+            <label for="name" class="form__label">Name</label>
+            <input type="text" name="name" id="name" class="form__input" required>
+        </div>
+        <div class="form__group">
+            <label for="email" class="form__label">Email</label>
+            <input type="email" name="email" id="email" class="form__input" required>
+        </div>
+        <div class="form__group">
+            <label for="password" class="form__label">Password</label>
+            <input type="password" name="password" id="password" class="form__input" required>
+        </div>
+        <button type="submit" class="btn btn--primary">Register</button>
+        <a href="/login" class="form__link">Already have an account? Login</a>
+    </form>
+</div>
+<% } %>
+
+
+
+
+<%- include('partials/footer') %>

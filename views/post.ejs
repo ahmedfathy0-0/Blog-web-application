@@ -1,18 +1,16 @@
 <%- include('partials/header.ejs') %>
 
 
-<div class="container">
+
+<div class="post-container">
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <h1><%= post.title %></h1>
-            <img src="<%= post.image %>" alt="web post card" class="card__img">
+            <img src="<%= post.image %>" alt="web post card" class="post-img">
             <%- post.content %>
         </div>
     </div>
 </div>
-
-
-
 
 
 

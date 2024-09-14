@@ -4,7 +4,6 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 dotenv.config();
 
-
 const db = new pg.Client({
   connectionString: process.env.POSTGRES_URL,
   ssl: {
@@ -112,6 +111,39 @@ app.delete('/posts/:id', async (req, res) => {
     res.status(500).json({ message: 'Error deleting post' });
   }
 });
+
+//Login and Register
+//get a specific user by Enail
+app.get('/users/:email', async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM users WHERE email = $1', [req.params.email]);
+    const user = result.rows[0];
+    res.json(user);
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).json({ message: 'Error fetching user' });
+  }
+});
+
+//create a new user
+app.post('/users', async (req, res) => {
+  const { name, email, password } = req.body;
+  try {
+    const result = await db.query(
+      'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *',
+      [name, email, password]
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error('Error creating user:', error);
+    res.status(500).json({ message: 'Error creating user' });
+  }
+}
+);
+
+
+
+
 
 app.listen(port, () => {
   console.log(`API is running at http://localhost:${port}`);
