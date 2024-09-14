@@ -17,7 +17,6 @@ function handleKeyPress(event) {
     if (event.key === 'Enter') {
         const query = document.getElementById('search-box').value;
         if (query) {
-            // Redirect to search results page with the query parameter
             window.location.href = `/search?query=${encodeURIComponent(query)}`;
         }
     }
@@ -33,7 +32,7 @@ function handleKeyPress(event) {
 
 <footer>
     <div class="footer footer-container">
-    <p class="mb-0 d-flex justify-content-center">© 2024 MR.Fathy. All rights reserved.</p>
+    <p class="mb-0 d-flex justify-content-center">© 2024 Ahmed Fathy. All rights reserved.</p>
     </div>
 </footer>
 
