@@ -14,7 +14,7 @@ const db = new pg.Client({
 db.connect();
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.APIPORT || 4000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
