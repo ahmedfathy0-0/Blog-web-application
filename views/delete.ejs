@@ -1,5 +1,6 @@
 <%- include('partials/header.ejs') %>
 
+<% if(isLogin) { %>
 <h1>Choose the post you want to delete!</h1>
 <% if(posts.length > 0) { %>
 <div class="container">
@@ -22,6 +23,9 @@
 <% } else { %>
   <h2>There is no posts to delete  </h2>
 <% } %>
+<% } else { %>
+  <h1>Please login to delete the post</h1>
+<%} %>
         
 
 

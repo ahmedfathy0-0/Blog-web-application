@@ -58,16 +58,27 @@ app.get('/filter', async (req, res) => {
   }
 });
 
+//Get all post by user
+app.get('/posts/user/:user_email', async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM posts WHERE user_email = $1', [req.params.user_email]);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    res.status(500).json({ message: 'Error fetching posts' });
+  }
+});
+
 // Create a new post
 app.post('/posts', async (req, res) => {
-  const { title, image, content } = req.body;
-  if (!title || !image || !content) {
-    return res.status(400).json({ message: 'Please provide title, image, and content' });
+  const { title, image, content, user_email } = req.body;
+  if (!title || !image || !content || !user_email) {
+    return res.status(400).json({ message: 'Please provide title, image, content, and user_email' });
   }
   try {
     const result = await db.query(
-      'INSERT INTO posts (title, image, content) VALUES ($1, $2, $3) RETURNING *',
-      [title, image, content]
+      'INSERT INTO posts (title, image, content, user_email) VALUES ($1, $2, $3, $4) RETURNING *',
+      [title, image, content, user_email]
     );
     res.status(201).json(result.rows[0]);
   } catch (error) {
@@ -75,6 +86,7 @@ app.post('/posts', async (req, res) => {
     res.status(500).json({ message: 'Error creating post' });
   }
 });
+
 
 // Update a specific post
 app.patch('/posts/:id', async (req, res) => {

@@ -1,5 +1,7 @@
 <%- include('partials/header.ejs') %>
 
+<% if(isLogin) { %>
+
 <h1>Choose the post you want to update!</h1>
 <% if(posts.length > 0) { %>
 <div class="container">
@@ -21,6 +23,10 @@
 <% } else { %>
   <h2>There is no posts to edit  </h2>
 <% } %>
+<% } else { %>
+  <h1>Please login to update the post</h1>
+<%} %>
+
         
 
 

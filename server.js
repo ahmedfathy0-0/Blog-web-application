@@ -48,7 +48,7 @@ const upload = multer({ storage: storage });
 
 app.get('/', async (req, res) => {
     const response = await axios.get(`${API_URL}/allposts`);
-    if(signinuseremail){
+    if(req.isAuthenticated()){
         res.render('index.ejs', { posts: response.data, isLogin: true });
     }
     else{
@@ -57,7 +57,7 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/newpost', (req, res) => {
-    if(!signinuseremail){
+    if(!req.isAuthenticated()){
             res.render('newpost.ejs', { isLogin: false });
     }
     else{
@@ -67,14 +67,18 @@ app.get('/newpost', (req, res) => {
 
 app.post('/submit', upload.single('image'), async (req, res) => {
     try{
-    const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
-    const newPost = {
-        title: req.body.name,
-        image: imagePath,
-        content: req.body.blog,
-    };
-    const response = await axios.post(`${API_URL}/posts`, newPost);
-    res.redirect(`/post/${response.data.id}`);
+        if(req.isAuthenticated()){
+            const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+            const newPost = {
+                title: req.body.name,
+                image: imagePath,
+                content: req.body.blog,
+                user_email: req.user.email,
+            };
+            console.log(newPost);
+            const response = await axios.post(`${API_URL}/posts`, newPost);
+            res.redirect(`/post/${response.data.id}`);
+        }
     } 
     catch(err){
         console.log(err);   
@@ -82,18 +86,18 @@ app.post('/submit', upload.single('image'), async (req, res) => {
 });
 
 app.get('/updatepost' , async(req, res) => {
-    const response = await axios.get(`${API_URL}/allposts`);
-    if(!signinuseremail){
-     res.render('updatepost.ejs', { posts: response.data , isLogin: false});
+    if(!req.isAuthenticated()){
+     res.render('updatepost.ejs', { posts: {} , isLogin: false});
     }
     else{
+        const response = await axios.get(`${API_URL}/posts/user/${req.user.email}`);
         res.render('updatepost.ejs', { posts: response.data , isLogin: true});
     }
 });
 
 app.get('/update/:id', async (req, res) => {
     const response = await axios.get(`${API_URL}/posts/${req.params.id}`);
-    if(!signinuseremail){
+    if(!req.isAuthenticated()){
         res.render('update.ejs', { post: response.data, isLogin: false });
     }
     else{
@@ -118,12 +122,12 @@ app.post('/update/:id', upload.single('image'),async (req, res) => {
 });
 
 app.get('/deletepost' , async (req, res) => {
-    const response = await axios.get(`${API_URL}/allposts`);
     
-    if(!signinuseremail){
-        res.render('delete.ejs', { posts: response.data , isLogin: false});
+    if(!req.isAuthenticated()){
+        res.render('delete.ejs', { posts: {} , isLogin: false});
     }
     else{
+        const response = await axios.get(`${API_URL}/posts/user/${req.user.email}`);
         res.render('delete.ejs', { posts: response.data , isLogin: true});
     }
     });
@@ -135,7 +139,7 @@ app.get('/delete/:id', async (req, res) => {
 app.get('/post/:id', async (req, res) => {
     try{
     const response = await axios.get(`${API_URL}/posts/${req.params.id}`);
-    if(signinuseremail){
+    if(req.isAuthenticated()){
         res.render('post.ejs', { post: response.data, isLogin: true });
     }
     else{
@@ -151,11 +155,11 @@ app.get('/post/:id', async (req, res) => {
 app.get('/search',async (req, res) => {
     const query = req.query.query.toLowerCase();
     const response = await axios.get(`${API_URL}/filter`, { params: { query } });
-   if(signinuseremail){
+   if(req.isAuthenticated()){
     res.render('searchresults.ejs', { posts: response.data, isLogin: true });
     }
     else{
-        res.render('searchresults.ejs', { posts: response.data, isLogin: false });
+    res.render('searchresults.ejs', { posts: response.data, isLogin: false });
     }
 });
 
