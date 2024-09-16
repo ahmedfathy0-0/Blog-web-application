@@ -9,13 +9,19 @@ import { Strategy } from "passport-local";
 import session from "express-session";
 import env from "dotenv";
 env.config();
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 
 
 const app = express();
-const port = 3000;
-const API_URL = 'http://localhost:4000';
+const port = process.env.PORT || 3000;
+const API_URL = process.env.API_URL || 'http://localhost:4000';
 const saltRounds = 10;
+
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -33,6 +39,9 @@ let signinuseremail ='';
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 
 const storage = multer.diskStorage({
