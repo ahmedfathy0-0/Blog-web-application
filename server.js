@@ -24,7 +24,7 @@ const saltRounds = 10;
 
 
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || 'NEW@22WNTG',
     resave: false,
     saveUninitialized: false
 }));
