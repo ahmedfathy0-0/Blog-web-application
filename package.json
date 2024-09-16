@@ -6,14 +6,16 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-     "start": "node server.js",  
-     "vercel-build": "npm install"
+     "start": "node index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ahmedfathy0-0/Blog-web-application.git"
   },
   "author": "",
+  "engines" : {
+    "node": "16.x"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ahmedfathy0-0/Blog-web-application/issues"
