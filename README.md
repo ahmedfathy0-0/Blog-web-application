@@ -1,7 +1,7 @@
 # 📝 Blog Web Application
 
 ## Overview
-This project is a **Blog Web Application** created using **Node.js** ![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white), **Express.js** ![Express.js](https://img.shields.io/badge/Express.js-000000?logo=express&logoColor=white), **EJS** ![EJS](https://img.shields.io/badge/EJS-4E9F3D?logo=javascript&logoColor=white), and **PostgreSQL** ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white). 
+This project is a **Blog Web Application** created using **Node.js** , **Express.js** , **EJS** , and **PostgreSQL**. 
 
 The application allows users to create, view, edit, and delete blog posts, with all data stored in PostgreSQL. It includes user authentication features, enabling users to register, log in, and manage their blog posts securely.
 
